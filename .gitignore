@@ -1,0 +1,19 @@
+# www
+www/node_modules
+www/public/hot
+www/public/storage
+www/storage/*.key
+www/vendor
+www/.idea
+www/.vagrant
+www/Homestead.json
+www/Homestead.yaml
+www/npm-debug.log
+www/yarn-error.log
+
+# docker
+docker/CWDB/src
+docker/mysql/mysqldata
+docker/resourceSpace/src
+docker/CWDB/cwdb_bizint.sqz
+docker/CWDB/cwdb_courseData.sqz

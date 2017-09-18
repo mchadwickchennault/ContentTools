@@ -1,0 +1,49 @@
+version: '3.0'
+volumes:
+  db:
+services:
+  ct_mysql:
+    container_name: ct_mysql
+    build: ./mysql
+    image: ct_mysql:tag
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+    volumes:
+      - ./mysql/mysqldata:/var/lib/mysql
+  resourcespace:
+    container_name: resourcespace
+    build: ./resourceSpace
+    image: resourcespace:tag
+    ports:
+      - '8888:80'
+    volumes:
+      - ./resourceSpace/src:/var/www/html/
+    depends_on:
+      - ct_mysql
+  cwdb:
+    container_name: cwdb
+    build: ./CWDB
+    image: cwdb:tag
+    ports:
+      - '8080:80'
+    volumes:
+      - ./CWDB/src/cwdb/html:/var/www/html
+      - ./CWDB/src/cwdb/lib/php/CourseData:/usr/lib/php/CourseData
+    depends_on:
+      - ct_mysql
+  ct_web:
+    container_name: ct_web
+    build: ./web
+    image: ct_web:tag
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+    - ../www:/var/www
+    depends_on:
+      - ct_mysql
+      - cwdb
+      - resourcespace
+
